@@ -106,7 +106,7 @@ def retrain(): # Rutarlo al endpoint '/api/v1/retrain/', metodo GET
 @app.route('/webhook_lapinta', methods=['POST'])
 def webhook():
     # Ruta al repositorio donde se realizará el pull
-    path_repo = '/home/lapinta1/lapinta1' #/home/lapinta1/
+    path_repo = '/home/lapinta1' #/home/lapinta1/
     servidor_web = '/var/www/lapinta1_pythonanywhere_com_wsgi.py' 
 
     # Comprueba si la solicitud POST contiene datos JSON
