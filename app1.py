@@ -13,7 +13,7 @@ import subprocess
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-path_base = "/repo/aqui_path_repo/"
+path_base = "C:/Users/Martín Ámez Segovia/OneDrive/Desktop/API_lapinta/lapinta/"
 
 colaboradores = [
     {"colab_id": 1, "name": "Alba", "city": "Barcelona", "age": 28},
@@ -61,7 +61,7 @@ def colab_id():
 @app.route('/api/v1/predict', methods=['GET'])
 def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
 
-    model = pickle.load(open(path_base + 'xgb_model.pkl','rb')) # si no funciona --> best_xgb_model
+    model = pickle.load(open(path_base + 'best_xgb_model.pkl','rb')) # si no funciona --> best_xgb_model
 
     # Hay que ver que argumentos necesita el modelo para predecir
     #############################################################
@@ -84,30 +84,30 @@ def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
     
 @app.route('/api/v1/retrain', methods=['GET'])
 def retrain(): # Rutarlo al endpoint '/api/v1/retrain/', metodo GET
-    if os.path.exists(path_base + "data_despliegue/data_suicide_raates_new.csv"):
-        data = pd.read_csv(path_base + 'data/Advertising_new.csv')
+    if os.path.exists(path_base + "data_despliegue/data_suicide_rates_new.csv"):
+        data = pd.read_csv(path_base + 'data_despliegue/data_suicide_rates_new.csv')
 
-        X_train, X_test, y_train, y_test = train_test_split(data.drop(columns=['sales']),
-                                                        data['sales'],
+        X_train, X_test, y_train, y_test = train_test_split(data.drop(columns=['DeathRatePer100K']),
+                                                        data['DeathRatePer100K'],
                                                         test_size = 0.20,
                                                         random_state=42)
-        model = pickle.load(open(path_base + 'xgb_model.pkl','rb')) #igual hay que poner best_xgb_model
+        model = pickle.load(open(path_base + 'best_xgb_model.pkl','rb')) #igual hay que poner best_xgb_model
         model.fit(X_train, y_train)
         rmse = np.sqrt(mean_squared_error(y_test, model.predict(X_test)))
         mape = mean_absolute_percentage_error(y_test, model.predict(X_test))
-        model.fit(data.drop(columns=['sales']), data['sales'])
-        pickle.dump(model, open(path_base + 'ad_model.pkl', 'wb'))
+        model.fit(data.drop(columns=['DeathRatePer100K']), data['DeathRatePer100K'])
+        pickle.dump(model, open(path_base + 'best_xgb_model.pkl', 'wb'))
 
         return f"Model retrained. New evaluation metric RMSE: {str(rmse)}, MAPE: {str(mape)}"
     else:
         return f"<h2>New data for retrain NOT FOUND. Nothing done!</h2>"
     
 
-@app.route('/webhook_2024', methods=['POST'])
+@app.route('/webhook_lapinta', methods=['POST'])
 def webhook():
     # Ruta al repositorio donde se realizará el pull
-    path_repo = '/ruta/a/tu/repositorio/en/PythonAnywhere'
-    servidor_web = '/ruta/al/fichero/WSGI/de/configuracion' 
+    path_repo = '/home/lapinta1/API_project.py.anywhere'
+    servidor_web = '/var/www/lapinta1_pythonanywhere_com_wsgi.py' 
 
     # Comprueba si la solicitud POST contiene datos JSON
     if request.is_json:
