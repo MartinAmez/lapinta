@@ -13,7 +13,7 @@ import subprocess
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-path_base = "C:/Users/Martín Ámez Segovia/OneDrive/Desktop/API_lapinta/lapinta/"
+path_base = "/home/lapinta1/lapinta/"
 
 colaboradores = [
     {"colab_id": 1, "name": "Alba", "city": "Barcelona", "age": 28},
@@ -106,7 +106,7 @@ def retrain(): # Rutarlo al endpoint '/api/v1/retrain/', metodo GET
 @app.route('/webhook_lapinta', methods=['POST'])
 def webhook():
     # Ruta al repositorio donde se realizará el pull
-    path_repo = '/home/lapinta1/API_project.py.anywhere'
+    path_repo = '/home/lapinta1/lapinta.py.anywhere'
     servidor_web = '/var/www/lapinta1_pythonanywhere_com_wsgi.py' 
 
     # Comprueba si la solicitud POST contiene datos JSON
