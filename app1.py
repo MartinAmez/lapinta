@@ -9,8 +9,6 @@ from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error
 import numpy as np
 import subprocess
 
-
-
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -25,16 +23,19 @@ colaboradores = [
     {"colab_id": 4, "name": "Martín", "city": "Valencia", "age": 31}]
 
 ####################
+
 @app.route('/', methods=['GET'])
 def home():
     return "<h1> Bienvenido al prototipo de API de 'LA PINTA'</h2><p> Esta API analiza el indice (contar un poco la historia...)<p> Para realizar una predicción escribe: --> 'http://127.0.0.1:5000/api/v1/predict'.<p> Para consultar los colaboradores: --> 'http://127.0.0.1:5000/api/v1/colaboradores/all'</p>"
 
 ####################
+
 @app.route('/api/v1/colab', methods=['GET'])
 def colab():
     return "Esta API ha sido desarrollada por Alba, Enrique, Lucas y Martín"
 
 ###################
+
 @app.route('/api/v1/colaboradores/all', methods=['GET'])
 def get_colaboradores():
 
@@ -43,6 +44,7 @@ def get_colaboradores():
     return jsonify({'colaboradores': nombres})
 
 ###################
+
 @app.route('/api/v1/colaboradores', methods=['GET'])
 def colab_id():
     if 'colab_id' in request.args:  
@@ -56,8 +58,6 @@ def colab_id():
             results.append(colaborador)
     return jsonify(results)
 
-
-###################
 
 ###################
 
@@ -105,6 +105,7 @@ def retrain(): # Rutarlo al endpoint '/api/v1/retrain/', metodo GET
     else:
         return f"<h2>New data for retrain NOT FOUND. Nothing done!</h2>"
     
+###################
 
 @app.route('/webhook_lapinta', methods=['POST'])
 def webhook():
