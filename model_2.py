@@ -16,7 +16,7 @@ X_train, X_test, y_train, y_test = train_test_split(data.drop(columns=["DeathRat
                                                     random_state=42)
 
 
-model = pickle.load(open('lapinta/best_xgb_model.pkl','rb'))
+model = pickle.load(open('lapinta/best_xgb_model_def.pkl','rb'))
 model.fit(X_train, y_train)
 
 cross_val_train_MSE = cross_val_score(model,X_train,y_train, cv = 4, scoring= "neg_mean_squared_error")
@@ -35,6 +35,6 @@ print("MAPE Test: ", mean_absolute_percentage_error(y_test, model.predict(X_test
 
 
 model.fit(data.drop(columns = ["DeathRatePer100K"]), data["DeathRatePer100K"])
-pickle.dump(model, open('xgb_model.pkl', 'wb'))
+pickle.dump(model, open('best_xgb_model_def.pkl', 'wb'))
 
 
