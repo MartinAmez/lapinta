@@ -8,14 +8,15 @@ import os
 
 #os.chdir(os.path.dirname(__file__))
 
-data = pd.read_csv('data_despliegue/data_suicide_rates.csv', index_col=0)
+data = pd.read_csv("C:/Users/Martín Ámez Segovia/OneDrive/Desktop/API_lapinta/lapinta/data_despliegue/data_suicide_rates.csv", index_col=0)
 
 X_train, X_test, y_train, y_test = train_test_split(data.drop(columns=["DeathRatePer100K"]),
                                                     data["DeathRatePer100K"],
                                                     test_size = 0.20,
                                                     random_state=42)
 
-model = pickle.load('best_xgb_model.pkl')
+
+model = pickle.load(open('lapinta/best_xgb_model.pkl','rb'))
 model.fit(X_train, y_train)
 
 cross_val_train_MSE = cross_val_score(model,X_train,y_train, cv = 4, scoring= "neg_mean_squared_error")
