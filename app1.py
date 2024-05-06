@@ -62,7 +62,7 @@ def colab_id():
 @app.route('/api/v1/predict', methods=['GET'])
 def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
 
-    model = pickle.load(open(path_base + 'best_xgb_model.pkl','rb')) # si no funciona --> best_xgb_model
+    model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb')) # si no funciona --> best_xgb_model
 
     # Hay que ver que argumentos necesita el modelo para predecir
     #############################################################
@@ -92,12 +92,12 @@ def retrain(): # Rutarlo al endpoint '/api/v1/retrain/', metodo GET
                                                         data['DeathRatePer100K'],
                                                         test_size = 0.20,
                                                         random_state=42)
-        model = pickle.load(open(path_base + 'best_xgb_model.pkl','rb')) #igual hay que poner best_xgb_model
+        model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb')) #igual hay que poner best_xgb_model
         model.fit(X_train, y_train)
         rmse = np.sqrt(mean_squared_error(y_test, model.predict(X_test)))
         mape = mean_absolute_percentage_error(y_test, model.predict(X_test))
         model.fit(data.drop(columns=['DeathRatePer100K']), data['DeathRatePer100K'])
-        pickle.dump(model, open(path_base + 'best_xgb_model.pkl', 'wb'))
+        pickle.dump(model, open(path_base + 'best_xgb_model_def.pkl', 'wb'))
 
         return f"Model retrained. New evaluation metric RMSE: {str(rmse)}, MAPE: {str(mape)}"
     else:
