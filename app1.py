@@ -15,6 +15,7 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 path_base = "/home/lapinta1/lapinta/"
+#path_base = "C:/Users/Martín Ámez Segovia/OneDrive/Desktop/API_lapinta/lapinta/"
 
 colaboradores = [
     {"colab_id": 1, "name": "Alba", "city": "Barcelona", "age": 28},
