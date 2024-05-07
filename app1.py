@@ -87,7 +87,7 @@ def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
     countryname_num = request.args.get('countryname_num', None)
 
     print(year, SuicideCount, CauseSpecificDeathPercentage, DeathRatePer100K, Population,
-          GDP, gdp_per_capita, inflation_rate, employment_population_ratio, region_name_num, sex_num, age_group_num, country_name_num)
+          GDP, GDPPerCapita, InflationRate, EmploymentPopulationRatio, regionname_num, sex_num, agegroup_num, countryname_num)
     
     
 
