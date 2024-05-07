@@ -31,7 +31,7 @@ colaboradores = [
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API analiza el indice (contar un poco la historia...)<p> Para realizar una predicción escribe: --> 'http://127.0.0.1:5000/api/v1/predict'.<p> Para consultar los colaboradores: --> 'http://127.0.0.1:5000/api/v1/colaboradores/all'</p>"
+    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API analiza el indice (contar un poco la historia...) <p> Para realizar una predicción escribe: --> 'https://lapinta1.pythonanywhere.com/api/v1/predict'.<p> Para reentrenar el modelo: --> 'https://lapinta1.pythonanywhere.com/api/v1/retrain'</p> <p> Para consultar los colaboradores: --> 'https://lapinta1.pythonanywhere.com/api/v1/colaboradores/all'</p>"
 # Poner aqui instrucciones de uso:
 
 ####################
