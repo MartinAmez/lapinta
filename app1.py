@@ -13,8 +13,13 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 path_base = "/home/lapinta1/lapinta/"
-#path_base = "C:/Users/Martín Ámez Segovia/OneDrive/Desktop/API_lapinta/lapinta/"
-#comentario prueba con repositorio
+#path_base_local = "C:/Users/Martín Ámez Segovia/OneDrive/Desktop/API_lapinta/lapinta/"
+
+####################
+
+#comentario prueba webhook
+
+####################
 
 colaboradores = [
     {"colab_id": 1, "name": "Alba", "city": "Barcelona", "age": 28},
@@ -26,7 +31,8 @@ colaboradores = [
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1> Bienvenido al prototipo de API de 'LA PINTA'</h2><p> Esta API analiza el indice (contar un poco la historia...)<p> Para realizar una predicción escribe: --> 'http://127.0.0.1:5000/api/v1/predict'.<p> Para consultar los colaboradores: --> 'http://127.0.0.1:5000/api/v1/colaboradores/all'</p>"
+    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API analiza el indice (contar un poco la historia...)<p> Para realizar una predicción escribe: --> 'http://127.0.0.1:5000/api/v1/predict'.<p> Para consultar los colaboradores: --> 'http://127.0.0.1:5000/api/v1/colaboradores/all'</p>"
+# Poner aqui instrucciones de uso:
 
 ####################
 
@@ -64,24 +70,33 @@ def colab_id():
 @app.route('/api/v1/predict', methods=['GET'])
 def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
 
-    model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb')) # si no funciona --> best_xgb_model
+    model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb')) 
+   
+    year = request.args.get('year', None)
+    suicide_count = request.args.get('suicide_count', None)
+    cause_specific_death_percentage = request.args.get('cause_specific_death_percentage', None)
+    death_rate_100k = request.args.get('death_rate_100k', None)
+    population = request.args.get('population', None)
+    gdp = request.args.get('gdp', None)
+    gdp_per_capita = request.args.get('gdp_per_capita', None)
+    inflation_rate = request.args.get('inflation_rate', None)
+    employment_population_ratio = request.args.get('employment_population_ratio', None)
+    region_name_num = request.args.get('region_name_num', None)
+    sex_num = request.args.get('sex_num', None)
+    age_group_num = request.args.get('age_group_num', None)
+    country_name_num = request.args.get('country_name_num', None)
 
-    # Hay que ver que argumentos necesita el modelo para predecir
-    #############################################################
+    print(year, suicide_count, cause_specific_death_percentage, death_rate_100k, population,
+          gdp, gdp_per_capita, inflation_rate, employment_population_ratio, region_name_num, sex_num, age_group_num, country_name_num)
     
-    #tv = request.args.get('tv', None)
-    #radio = request.args.get('radio', None)
-    #newspaper = request.args.get('newspaper', None)
-
-    #print(tv,radio,newspaper)
-    #print(type(tv))
-
-    #if tv is None or radio is None or newspaper is None:
-        #return "Args empty, the data are not enough to predict, STUPID!!!!"
-    #else:
-       #prediction = model.predict([[float(tv),float(radio),float(newspaper)]])
     
-    #return jsonify({'predictions': prediction[0]})
+
+    if year is None or suicide_count is None or cause_specific_death_percentage is None or death_rate_100k is None or population is None or gdp is None or gdp_per_capita is None or inflation_rate is None or employment_population_ratio is None or region_name_num is None or sex_num is None or age_group_num is None or country_name_num is None:
+        return "Args empty, the data are not enough to predict"
+    else:
+       prediction = model.predict([[int(year),float(suicide_count),float(cause_specific_death_percentage), float(death_rate_100k), float(population), float(gdp), float(gdp_per_capita), float(inflation_rate), float(employment_population_ratio), float(region_name_num), int(sex_num), int(age_group_num), int(country_name_num)]])
+    
+    return jsonify({'predictions': prediction[0]})
 
 ###################
     
@@ -94,14 +109,14 @@ def retrain(): # Rutarlo al endpoint '/api/v1/retrain/', metodo GET
                                                         data['DeathRatePer100K'],
                                                         test_size = 0.20,
                                                         random_state=42)
-        model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb')) #igual hay que poner best_xgb_model
+        model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb'))
         model.fit(X_train, y_train)
         rmse = np.sqrt(mean_squared_error(y_test, model.predict(X_test)))
         mape = mean_absolute_percentage_error(y_test, model.predict(X_test))
         model.fit(data.drop(columns=['DeathRatePer100K']), data['DeathRatePer100K'])
         pickle.dump(model, open(path_base + 'best_xgb_model_def.pkl', 'wb'))
 
-        return f"Model retrained. New evaluation metric RMSE: {str(rmse)}, MAPE: {str(mape)}"
+        return f"Model retrained. New evaluation metric RMSE: {str(rmse)}"
     else:
         return f"<h2>New data for retrain NOT FOUND. Nothing done!</h2>"
     
@@ -109,8 +124,8 @@ def retrain(): # Rutarlo al endpoint '/api/v1/retrain/', metodo GET
 
 @app.route('/webhook_lapinta', methods=['POST'])
 def webhook():
-    # Ruta al repositorio donde se realizará el pull
-    path_repo = '/home/lapinta1/lapinta' #/home/lapinta1/
+    # Ruta al repositorio en pythonAnywhere
+    path_repo = '/home/lapinta1/lapinta' 
     servidor_web = '/var/www/lapinta1_pythonanywhere_com_wsgi.py' 
 
     # Comprueba si la solicitud POST contiene datos JSON
