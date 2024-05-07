@@ -31,7 +31,7 @@ colaboradores = [
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API utiliza un modelo de regresión XGBoost para predecir el ratio de suicidio por 100.000 habitantes <p> Para realizar una predicción escribe: --> 'https://lapinta1.pythonanywhere.com/api/v1/predict'.<p> Para reentrenar el modelo: --> 'https://lapinta1.pythonanywhere.com/api/v1/retrain'</p> <p> Para consultar los colaboradores: --> 'https://lapinta1.pythonanywhere.com/api/v1/colaboradores/all'</p>"
+    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API utiliza un modelo de regresión XGBoost para predecir el ratio de suicidio por 100.000 habitantes. <p> Para realizar una predicción escribe: --> 'https://lapinta1.pythonanywhere.com/api/v1/predict'<p> Para reentrenar el modelo: --> 'https://lapinta1.pythonanywhere.com/api/v1/retrain'</p> <p> Para consultar los colaboradores: --> 'https://lapinta1.pythonanywhere.com/api/v1/colaboradores/all'</p>"
 # Poner aqui instrucciones de uso:
 
 ####################
@@ -72,9 +72,9 @@ def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
 
     model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb')) 
    
-    year = request.args.get('year', None)
-    suicide_count = request.args.get('suicide_count', None)
-    cause_specific_death_percentage = request.args.get('cause_specific_death_percentage', None)
+    year = request.args.get('Year', None)
+    suicide_count = request.args.get('SuicideCount', None)
+    cause_specific_death_percentage = request.args.get('Cause_specific_death_percentage', None)
     death_rate_100k = request.args.get('death_rate_100k', None)
     population = request.args.get('population', None)
     gdp = request.args.get('gdp', None)
