@@ -90,7 +90,7 @@ def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
         data_to_predict = [np.int64(Year), np.float64(SuicideCount), np.float64(CauseSpecificDeathPercentage), np.float64(Population), np.float64(GDP),\
                            np.float64(GDPPerCapita), np.float64(InflationRate), np.float64(EmploymentPopulationRatio), np.float64(regionname_num),\
                             np.int64(sex_num), np.int64(agegroup_num), np.int64(countryname_num)]
-        data_to_predict = pd.DateFrame([data_to_predict], columns = field_names)
+        data_to_predict = pd.DataFrame([data_to_predict], columns = field_names)
 
         #prediction = model.predict([[np.int64(Year), np.float64(SuicideCount), np.float64(CauseSpecificDeathPercentage), np.float64(Population), np.float64(GDP), np.float64(GDPPerCapita), np.float64(InflationRate), np.float64(EmploymentPopulationRatio), np.float64(regionname_num), np.int64(sex_num), np.int64(agegroup_num), np.int64(countryname_num)]])
         prediction = model.predict(data_to_predict)
