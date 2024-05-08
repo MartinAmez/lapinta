@@ -13,7 +13,7 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 path_base = "/home/lapinta1/lapinta/"
-#path_base_local = "C:/Users/Martín Ámez Segovia/OneDrive/Desktop/API_lapinta/lapinta/"
+#path_base_local = "C:/Users/lucas/Desktop/The_Bridge/Git/lapinta/"
 
 ####################
 
@@ -69,13 +69,11 @@ def colab_id():
 
 @app.route('/api/v1/predict', methods=['GET'])
 def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
+    model = pickle.load(open(path_base + 'best_xgb_model_def.pkl', 'rb')) 
 
-    model = pickle.load(open(path_base + 'best_xgb_model_def.pkl','rb')) 
-   
     Year = request.args.get('Year', None)
     SuicideCount = request.args.get('SuicideCount', None)
     CauseSpecificDeathPercentage = request.args.get('CauseSpecificDeathPercentage', None)
-    #DeathRatePer100K = request.args.get('DeathRatePer100K', None)
     Population = request.args.get('Population', None)
     GDP = request.args.get('GDP', None)
     GDPPerCapita = request.args.get('GDPPerCapita', None)
@@ -86,17 +84,13 @@ def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
     agegroup_num = request.args.get('agegroup_num', None)
     countryname_num = request.args.get('countryname_num', None)
 
-    print(Year, SuicideCount, CauseSpecificDeathPercentage, Population,
-          GDP, GDPPerCapita, InflationRate, EmploymentPopulationRatio, regionname_num, sex_num, agegroup_num, countryname_num)
-    
-    
-
-    if Year is None or SuicideCount is None or CauseSpecificDeathPercentage is None or Population is None or GDP is None or GDPPerCapita is None or InflationRate is None or EmploymentPopulationRatio is None or regionname_num is None or sex_num is None or agegroup_num is None or countryname_num is None:
+    if None in [Year, SuicideCount, CauseSpecificDeathPercentage, Population, GDP, GDPPerCapita, InflationRate, EmploymentPopulationRatio, regionname_num, sex_num, agegroup_num, countryname_num]:
         return "Args empty, the data are not enough to predict"
     else:
-       prediction = model.predict([[Year,float(SuicideCount),float(CauseSpecificDeathPercentage), float(Population), float(GDP), float(GDPPerCapita), float(InflationRate), float(EmploymentPopulationRatio), float(regionname_num), int(sex_num), int(agegroup_num), int(countryname_num)]])
-    
-    return jsonify({'predictions': prediction[0]})
+        prediction = model.predict([[int(Year), float(SuicideCount), float(CauseSpecificDeathPercentage), float(Population), float(GDP), float(GDPPerCapita), float(InflationRate), float(EmploymentPopulationRatio), float(regionname_num), int(sex_num), int(agegroup_num), int(countryname_num)]])
+        prediction_float = np.float64(prediction[0])
+        return jsonify({'predictions': float(prediction_float)})
+
 
 ###################
     
