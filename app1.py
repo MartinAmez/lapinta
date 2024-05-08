@@ -70,7 +70,7 @@ def colab_id():
 @app.route('/api/v1/predict', methods=['GET'])
 def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
     model = pickle.load(open(path_base + 'best_xgb_model_def.pkl', 'rb')) 
-
+    field_names = ["Year","SuicideCount","CauseSpecificDeathPercentage","Population","GDP","GDPPerCapita","InflationRate","EmploymentPopulationRatio","regionname_num","sex_num","agegroup_num","countryname_num"]
     Year = request.args.get('Year', None)
     SuicideCount = request.args.get('SuicideCount', None)
     CauseSpecificDeathPercentage = request.args.get('CauseSpecificDeathPercentage', None)
@@ -87,7 +87,9 @@ def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
     if None in [Year, SuicideCount, CauseSpecificDeathPercentage, Population, GDP, GDPPerCapita, InflationRate, EmploymentPopulationRatio, regionname_num, sex_num, agegroup_num, countryname_num]:
         return "Args empty, the data are not enough to predict"
     else:
-        prediction = model.predict([[np.int64(Year), np.float64(SuicideCount), np.float64(CauseSpecificDeathPercentage), np.float64(Population), np.float64(GDP), np.float64(GDPPerCapita), np.float64(InflationRate), np.float64(EmploymentPopulationRatio), np.float64(regionname_num), np.int64(sex_num), np.int64(agegroup_num), np.int64(countryname_num)]])
+        data_to_predict = pd.DataFrame([np.int64(Year), np.float64(SuicideCount), np.float64(CauseSpecificDeathPercentage), np.float64(Population), np.float64(GDP), np.float64(GDPPerCapita), np.float64(InflationRate), np.float64(EmploymentPopulationRatio), np.float64(regionname_num), np.int64(sex_num), np.int64(agegroup_num), np.int64(countryname_num)], columns= field_names)
+        #prediction = model.predict([[np.int64(Year), np.float64(SuicideCount), np.float64(CauseSpecificDeathPercentage), np.float64(Population), np.float64(GDP), np.float64(GDPPerCapita), np.float64(InflationRate), np.float64(EmploymentPopulationRatio), np.float64(regionname_num), np.int64(sex_num), np.int64(agegroup_num), np.int64(countryname_num)]])
+        prediction = model.predict(data_to_predict)
         prediction_float = np.float64(prediction[0])
         return jsonify({'predictions': float(prediction_float)})
 
