@@ -94,7 +94,7 @@ def predict(): # Ligado al endpoint '/api/v1/predict', con el método GET
     if Year is None or SuicideCount is None or CauseSpecificDeathPercentage is None or Population is None or GDP is None or GDPPerCapita is None or InflationRate is None or EmploymentPopulationRatio is None or regionname_num is None or sex_num is None or agegroup_num is None or countryname_num is None:
         return "Args empty, the data are not enough to predict"
     else:
-       prediction = model.predict([[int(Year),float(SuicideCount),float(CauseSpecificDeathPercentage), float(Population), float(GDP), float(GDPPerCapita), float(InflationRate), float(EmploymentPopulationRatio), float(regionname_num), int(sex_num), int(agegroup_num), int(countryname_num)]])
+       prediction = model.predict([[Year,float(SuicideCount),float(CauseSpecificDeathPercentage), float(Population), float(GDP), float(GDPPerCapita), float(InflationRate), float(EmploymentPopulationRatio), float(regionname_num), int(sex_num), int(agegroup_num), int(countryname_num)]])
     
     return jsonify({'predictions': prediction[0]})
 
