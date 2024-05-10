@@ -25,14 +25,32 @@ colaboradores = [
     {"colab_id": 1, "name": "Alba", "city": "Barcelona", "age": 28},
     {"colab_id": 2, "name": "Enrique", "city": "Madrid", "age": 28},
     {"colab_id": 3, "name": "Lucas", "city": "Jaén", "age": 27},
-    {"colab_id": 4, "name": "Martín", "city": "Valencia", "age": 31}]
+    {"colab_id": 4, "name": "Marton", "city": "Real de Madrid", "age": 31},
+    {"colab_id": 5, "name": "ChatGPT", "city": "Internes", "age": 2},
+    {"colab_id": 6, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 7, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 8, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 9, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 10, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 11, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 12, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 13, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 14, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 15, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 16, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 17, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 18, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 19, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 20, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 21, "name": "Javier", "city": "Madrid", "age": 31},
+    {"colab_id": 22, "name": "Javier", "city": "Madrid", "age": 31}]
 
 ####################
 
 @app.route('/', methods=['GET'])
 def home():
     
-    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API utiliza un modelo de regresión XGBoost para predecir el ratio de suicidio por 100.000 habitantes. <p> Para realizar una predicción escribe: --> 'https://lapinta1.pythonanywhere.com/api/v1/predict' <p> Para reentrenar el modelo: --> 'https://lapinta1.pythonanywhere.com/api/v1/retrain'</p> <p> Para consultar los colaboradores: --> 'https://lapinta1.pythonanywhere.com/api/v1/colaboradores/all'</p>"
+    return "<h1> Manoplas Enrique se me cargó el mensaje  bonito, ahora sus jodéis y os quedáis de este</h2><p> Esta API utiliza un modelo de regresión XGBoost para predecir el ratio de suicidio por 100.000 habitantes. <p> Para realizar una predicción escribe: --> 'https://lapinta1.pythonanywhere.com/api/v1/predict' <p> Para reentrenar el modelo: --> 'https://lapinta1.pythonanywhere.com/api/v1/retrain'</p> <p> Para consultar los colaboradores: --> 'https://lapinta1.pythonanywhere.com/api/v1/colaboradores/all'</p>"
 ####################
 
 @app.route('/api/v1/colab', methods=['GET'])
