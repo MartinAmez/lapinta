@@ -32,7 +32,7 @@ colaboradores = [
 @app.route('/', methods=['GET'])
 def home():
     
-    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API utiliza un modelo de regresión XGBoost para predecir el ratio de suicidio por 100.000 habitantes. <p> Para realizar una predicción escribe: --> 'https://lapinta1.pythonanywhere.com/api/v1/predict' <p> 'URL Ejemplo: 'https://lapinta1.pythonanywhere.com/api/v1/predict?Year=1990&SuicideCount=100&CauseSpecificDeathPercentage=0.5&DeathRatePer100K=15&Population=1000000&GDP=2000000&GDPPerCapita=20000&InflationRate=2.5&EmploymentPopulationRatio=0.6&regionname_num=3&sex_num=1&agegroup_num=2&countryname_num=5' <p> Para reentrenar el modelo: --> 'https://lapinta1.pythonanywhere.com/api/v1/retrain'</p> <p> Para consultar los colaboradores: --> 'https://lapinta1.pythonanywhere.com/api/v1/colaboradores/all'</p>"
+    return "<h1> Bienvenido a la API de 'LA PINTA'</h2><p> Esta API utiliza un modelo de regresión XGBoost para predecir el ratio de suicidio por 100.000 habitantes. <p> Para realizar una predicción escribe: --> 'https://lapinta1.pythonanywhere.com/api/v1/predict' <p> Para reentrenar el modelo: --> 'https://lapinta1.pythonanywhere.com/api/v1/retrain'</p> <p> Para consultar los colaboradores: --> 'https://lapinta1.pythonanywhere.com/api/v1/colaboradores/all'</p>"
 ####################
 
 @app.route('/api/v1/colab', methods=['GET'])
